@@ -159,8 +159,15 @@ public class Home extends JFrame {
 		btnNewButton_3_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-					KQ kq = new KQ();
-					kq.show();
+					KQ kq;
+					try {
+						kq = new KQ();
+						kq.show();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 				
 				dispose();
 			}
