@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.SystemColor;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,7 +35,7 @@ import java.awt.event.MouseAdapter;
 public class KH_Online extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtFind;
 	private List<OnlineCourse> OlCs;
 	public static int courseid;
 	int selectedIndex;
@@ -40,7 +44,7 @@ public class KH_Online extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void KH_Onlineform(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -71,37 +75,37 @@ public class KH_Online extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Th\u00EAm");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnThem = new JButton("Th\u00EAm");
+		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ThemDuLieu_Onsite themonsite = new ThemDuLieu_Onsite();
 				themonsite.show();
 			}
 		});
-		btnNewButton.setBackground(new Color(102, 153, 255));
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton.setIcon(new ImageIcon(QLSV.class.getResource("/IMG/add.png")));
-		btnNewButton.setBounds(29, 536, 119, 50);
-		contentPane.add(btnNewButton);
+		btnThem.setBackground(new Color(102, 153, 255));
+		btnThem.setForeground(new Color(255, 255, 255));
+		btnThem.setHorizontalAlignment(SwingConstants.LEFT);
+		btnThem.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnThem.setIcon(new ImageIcon(QLSV.class.getResource("/IMG/add.png")));
+		btnThem.setBounds(29, 536, 119, 50);
+		contentPane.add(btnThem);
 		
-		JButton btnSa = new JButton("S\u1EEDa");
-		btnSa.setForeground(new Color(255, 255, 255));
-		btnSa.setBackground(new Color(102, 153, 255));
-		btnSa.addActionListener(new ActionListener() {
+		JButton btnSua = new JButton("S\u1EEDa");
+		btnSua.setForeground(new Color(255, 255, 255));
+		btnSua.setBackground(new Color(102, 153, 255));
+		btnSua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SuaDuLieu_Onsite suaonsite = new SuaDuLieu_Onsite();
-				suaonsite.frmedit();
+				suaonsite.show();
 			}
 		});
-		btnSa.setIcon(new ImageIcon(QLSV.class.getResource("/IMG/edit.png")));
-		btnSa.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnSa.setBounds(171, 536, 101, 50);
-		contentPane.add(btnSa);
+		btnSua.setIcon(new ImageIcon(QLSV.class.getResource("/IMG/edit.png")));
+		btnSua.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnSua.setBounds(171, 536, 101, 50);
+		contentPane.add(btnSua);
 		
-		JButton btnNewButton_1_1 = new JButton("X\u00F3a");
-		btnNewButton_1_1.addActionListener(new ActionListener() {
+		JButton btnXoa = new JButton("X\u00F3a");
+		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					listOlC();
@@ -111,40 +115,45 @@ public class KH_Online extends JFrame {
 				}
 			}
 		});
-		btnNewButton_1_1.setForeground(new Color(255, 255, 255));
-		btnNewButton_1_1.setBackground(new Color(102, 153, 255));
-		btnNewButton_1_1.setIcon(new ImageIcon(QLSV.class.getResource("/IMG/delete.png")));
-		btnNewButton_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_1_1.setBounds(313, 536, 101, 50);
-		contentPane.add(btnNewButton_1_1);
+		btnXoa.setForeground(new Color(255, 255, 255));
+		btnXoa.setBackground(new Color(102, 153, 255));
+		btnXoa.setIcon(new ImageIcon(QLSV.class.getResource("/IMG/delete.png")));
+		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnXoa.setBounds(313, 536, 101, 50);
+		contentPane.add(btnXoa);
 		
-		JButton btnNewButton_1_1_1 = new JButton("Quay l\u1EA1i");
-		btnNewButton_1_1_1.setForeground(new Color(128, 0, 0));
-		btnNewButton_1_1_1.setBackground(SystemColor.inactiveCaptionBorder);
-		btnNewButton_1_1_1.setIcon(new ImageIcon(QLSV.class.getResource("/IMG/back.png")));
-		btnNewButton_1_1_1.addActionListener(new ActionListener() {
+		JButton btnExit = new JButton("Quay l\u1EA1i");
+		btnExit.setForeground(new Color(128, 0, 0));
+		btnExit.setBackground(SystemColor.inactiveCaptionBorder);
+		btnExit.setIcon(new ImageIcon(QLSV.class.getResource("/IMG/back.png")));
+		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Home home = new Home();
 				home.show();				
 				dispose();
 			}
 		});
-		btnNewButton_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_1_1_1.setBounds(755, 571, 126, 50);
-		contentPane.add(btnNewButton_1_1_1);
+		btnExit.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnExit.setBounds(755, 571, 126, 50);
+		contentPane.add(btnExit);
 		
-		JButton btnNewButton_1_1_1_1 = new JButton("T\u00ECm ki\u1EBFm");
-		btnNewButton_1_1_1_1.setIcon(new ImageIcon(QLGV.class.getResource("/IMG/search.png")));
-		btnNewButton_1_1_1_1.setForeground(new Color(102, 153, 255));
-		btnNewButton_1_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_1_1_1_1.setBackground(SystemColor.inactiveCaptionBorder);
-		btnNewButton_1_1_1_1.setBounds(700, 39, 139, 37);
-		contentPane.add(btnNewButton_1_1_1_1);
+		JButton btnFind = new JButton("T\u00ECm ki\u1EBFm");
+		btnFind.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btn_Find();
+			}
+		});
+		btnFind.setIcon(new ImageIcon(QLGV.class.getResource("/IMG/search.png")));
+		btnFind.setForeground(new Color(102, 153, 255));
+		btnFind.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnFind.setBackground(SystemColor.inactiveCaptionBorder);
+		btnFind.setBounds(700, 39, 139, 37);
+		contentPane.add(btnFind);
 		
-		textField = new JTextField();
-		textField.setBounds(249, 43, 404, 37);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtFind = new JTextField();
+		txtFind.setBounds(249, 43, 404, 37);
+		contentPane.add(txtFind);
+		txtFind.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nh\u1EADp th\u00F4ng tin:");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
@@ -177,6 +186,23 @@ public class KH_Online extends JFrame {
 	}
 	
 
+	protected void btn_Find() {
+		// TODO Auto-generated method stub
+		try {
+			String Title = txtFind.getText();			
+			if(Title.isBlank()==false) {
+				List list = OlCBll.findOlC(Title);
+				DefaultTableModel model = convertOlC(list);
+				table.setModel(model);
+			}else {
+				JOptionPane.showMessageDialog(this, "title is empty", "Message",JOptionPane.ERROR_MESSAGE);
+			}
+		}catch(SQLException e) {
+			Logger.getLogger(KH_Online.class.getName()).log(Level.SEVERE,null, e);
+		}
+		
+	}
+
 	public void listOlC() throws SQLException{
 		List list = OlCBll.loadOlC(1);
 		DefaultTableModel model = convertOlC(list);
@@ -200,8 +226,8 @@ public class KH_Online extends JFrame {
 	}
 	private void cellClick() {
 		// TODO Auto-generated method stub
-		selectedIndex = table.getSelectedRow();
-		OnlineCourse c = OlCs.get(selectedIndex);
-		courseid = c.getCourseID();		
+		selectedIndex = table.getSelectedRow();		
+		courseid = (int) table.getValueAt(selectedIndex, 1);
+		
 	}
 }

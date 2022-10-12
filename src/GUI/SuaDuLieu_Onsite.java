@@ -36,13 +36,13 @@ import javax.swing.JRadioButton;
 public class SuaDuLieu_Onsite extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtC;
-	private JTextField txtURL;
-	private JTextField txtTitle;
-	private JTextField txtDep;
+	private JTextField txtC = new JTextField();
+	private JTextField txtURL = new JTextField();
+	private JTextField txtTitle = new JTextField();
+	private JTextField txtDep = new JTextField();
 	private JTextField txtLo;
 	private JTextField txtTime;
-	private JTextField txtCre;
+	private JTextField txtCre = new JTextField();
 	private JTextField txtDate;
 	private int viewcourseid;
 	private List<OnlineCourse> OlC;
@@ -68,9 +68,15 @@ public class SuaDuLieu_Onsite extends JFrame {
 	 * Create the frame.
 	 */
 	public SuaDuLieu_Onsite() {
+		try {
+			load();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		this.setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 498, 445);
+		setBounds(100, 100, 501, 445);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.inactiveCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,12 +84,18 @@ public class SuaDuLieu_Onsite extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JLabel lblDate = new JLabel("Date");
+		lblDate.hide();
+		lblDate.setBackground(SystemColor.menu);
+		lblDate.setBounds(41, 270, 45, 20);
+		contentPane.add(lblDate);
+		
 		JLabel lblCourse = new JLabel("Course ID");
 		lblCourse.setBackground(new Color(240, 240, 240));
 		lblCourse.setBounds(41, 30, 65, 20);
 		contentPane.add(lblCourse);
 		
-		txtC = new JTextField();
+		
 		txtC.setEditable(false);
 		txtC.setBounds(142, 30, 242, 20);
 		contentPane.add(txtC);
@@ -94,7 +106,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 		lblURL.setBounds(41, 180, 45, 20);
 		contentPane.add(lblURL);
 		
-		txtURL = new JTextField();
+		
 		txtURL.setColumns(10);
 		txtURL.setBounds(142, 180, 242, 20);
 		contentPane.add(txtURL);
@@ -104,7 +116,8 @@ public class SuaDuLieu_Onsite extends JFrame {
 		lblTitle.setBounds(41, 60, 20, 20);
 		contentPane.add(lblTitle);
 		
-		txtTitle = new JTextField();
+//		txtTitle = new JTextField();
+		
 		txtTitle.setColumns(10);
 		txtTitle.setBounds(142, 60, 242, 20);
 		contentPane.add(txtTitle);
@@ -115,11 +128,13 @@ public class SuaDuLieu_Onsite extends JFrame {
 		contentPane.add(lblDep);
 		
 		JLabel lblLo = new JLabel("Location");
+		lblLo.hide();
 		lblLo.setBackground(new Color(240, 240, 240));
 		lblLo.setBounds(41, 210, 91, 20);
 		contentPane.add(lblLo);
 		
 		JLabel lblTime = new JLabel("Time");
+		lblTime.hide();
 		lblTime.setBackground(new Color(240, 240, 240));
 		lblTime.setBounds(41, 240, 45, 20);
 		contentPane.add(lblTime);
@@ -129,7 +144,12 @@ public class SuaDuLieu_Onsite extends JFrame {
 		lblCre.setBounds(41, 90, 45, 20);
 		contentPane.add(lblCre);
 		
-		txtDep = new JTextField();
+		txtDate = new JTextField();
+		txtDate.hide();
+		txtDate.setColumns(10);
+		txtDate.setBounds(142, 270, 242, 20);
+		contentPane.add(txtDate);
+	
 		txtDep.setColumns(10);
 		txtDep.setBounds(142, 120, 242, 20);
 		contentPane.add(txtDep);
@@ -146,7 +166,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 		txtTime.hide();
 		contentPane.add(txtTime);
 		
-		txtCre = new JTextField();
+	
 		txtCre.setColumns(10);
 		txtCre.setBounds(142, 90, 242, 20);
 		contentPane.add(txtCre);
@@ -154,7 +174,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 		JButton btnSave = new JButton("L\u01B0u");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				btn_update();
 			}
 		});
 		btnSave.setIcon(new ImageIcon(ThemDuLieu_Onsite.class.getResource("/IMG/Custom-Icon-Design-Flatastic-9-Save.png")));
@@ -190,6 +210,10 @@ public class SuaDuLieu_Onsite extends JFrame {
 				if(radioOnline != null) {
 					txtLo.hide();
 					txtTime.hide();
+					txtDate.hide();
+					lblTime.hide();
+					lblLo.hide();
+					lblDate.hide();
 				}
 			}
 		});
@@ -203,6 +227,10 @@ public class SuaDuLieu_Onsite extends JFrame {
 				if(radioOnsite != null) {
 					txtLo.show();
 					txtTime.show();
+					txtDate.show();
+					lblTime.show();
+					lblLo.show();
+					lblDate.show();				
 				}
 			}
 		});
@@ -212,22 +240,26 @@ public class SuaDuLieu_Onsite extends JFrame {
 		group.add(radioOnline);
 		group.add(radioOnsite);
 		
-		JLabel lblDate = new JLabel("Date");
-		lblDate.setBackground(SystemColor.menu);
-		lblDate.setBounds(41, 270, 45, 20);
-		contentPane.add(lblDate);
 		
-		txtDate = new JTextField();
-		txtDate.setColumns(10);
-		txtDate.setBounds(142, 270, 242, 20);
-		contentPane.add(txtDate);
 	}
+	public void btn_update() {
+		
+		
+	}
+
 	public void load() throws SQLException {
 		viewcourseid = KH_Online.courseid;
-		OlC = OlCBll.loadOlC(viewcourseid);
-		for(OnlineCourse OlCs:OlC) {			
-			txtC.setText(OlCs.getCourseID()+"");
-			
+		System.out.print(viewcourseid);
+		List list = OlCBll.load1record(viewcourseid);
+		OnlineCourse OlCs = new OnlineCourse();
+		for (int i = 0;i<list.size();i++) {
+			OnlineCourse OlC = (OnlineCourse) list.get(i);
+			txtC.setText(OlC.getCourseID()+"");
+			txtTitle.setText(OlC.getTitle());
+			txtDep.setText(OlC.getDepartmentID()+"");
+			txtCre.setText(OlC.getCredits()+"");
+			txtURL.setText(OlC.getUrl());
 		}
 	}
+	
 }

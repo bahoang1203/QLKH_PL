@@ -2,6 +2,7 @@ package DAL;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OnlineCourseDAL extends MyDatabaseManager{
 	public OnlineCourseDAL(){
@@ -49,5 +50,44 @@ public class OnlineCourseDAL extends MyDatabaseManager{
 		p.setInt(1, OlC.getCourseID());
 		int result = p.executeUpdate();
 		return result;
+	}
+	public List<OnlineCourse> findOlC(String title) throws SQLException{
+		String query = "SELECT `course`.`CourseID`,`Title`,`Credits`,`DepartmentID`,`url` FROM `course`,`onlinecourse` WHERE `onlinecourse`.`CourseID` = `course`.`CourseID` and  `course`.`Title` = ?";
+		PreparedStatement p = c.prepareStatement(query);
+		p.setString(1, title);
+		ResultSet rs = p.executeQuery();
+		List<OnlineCourse> list = new ArrayList<>();
+		if(rs!=null) {
+			//int i =1;
+			while(rs.next()) {
+				OnlineCourse OlC = new OnlineCourse();
+				OlC.setCourseID(rs.getInt("CourseID"));
+				OlC.setTitle(rs.getString("Title"));
+				OlC.setCredits(rs.getInt("Credits"));
+				OlC.setDepartmentID(rs.getInt("DepartmentID"));
+				OlC.setUrl(rs.getString("url"));
+				list.add(OlC);
+			}
+		}
+		return list;
+	}
+	public List<OnlineCourse> load1record(int courseid) throws SQLException{
+		String query = "SELECT `course`.`CourseID`,`Title`,`Credits`,`DepartmentID`,`url` FROM `course`,`onlinecourse` WHERE `onlinecourse`.`CourseID` = `course`.`CourseID`  and `course`.`CourseID` = ?;";
+		PreparedStatement p =c.prepareStatement(query);
+		p.setInt(1, courseid);		
+		ResultSet rs = p.executeQuery();
+		List <OnlineCourse> list = new ArrayList<>();
+		if(rs!=null) {
+			while(rs.next()) {
+				OnlineCourse OlC = new OnlineCourse();
+				OlC.setCourseID(rs.getInt("CourseID"));
+				OlC.setTitle(rs.getString("Title"));
+				OlC.setCredits(rs.getInt("Credits"));
+				OlC.setDepartmentID(rs.getInt("DepartmentID"));
+				OlC.setUrl(rs.getString("URL"));
+				list.add(OlC);
+			}
+		}		
+		return list;
 	}
 }
