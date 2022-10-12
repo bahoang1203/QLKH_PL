@@ -11,4 +11,12 @@ public class CourseBLL {
 		int result = cDAL.insertCourse(c);
 		return result;
 	}
+	public int updCourse(Course c) throws SQLException{
+		int result = cDAL.updateCourse(c);
+		return result;
+	}
+	public int delCourse(Course c) throws SQLException{
+		int result = cDAL.deleteCourse(c);
+		return result;
+	}
 }

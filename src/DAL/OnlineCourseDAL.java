@@ -51,7 +51,7 @@ public class OnlineCourseDAL extends MyDatabaseManager{
 		int result = p.executeUpdate();
 		return result;
 	}
-	public List<OnlineCourse> findOlC(String title) throws SQLException{
+	public List<OnlineCourse> findOnlineCourse(String title) throws SQLException{
 		String query = "SELECT `course`.`CourseID`,`Title`,`Credits`,`DepartmentID`,`url` FROM `course`,`onlinecourse` WHERE `onlinecourse`.`CourseID` = `course`.`CourseID` and  `course`.`Title` = ?";
 		PreparedStatement p = c.prepareStatement(query);
 		p.setString(1, title);
@@ -71,7 +71,7 @@ public class OnlineCourseDAL extends MyDatabaseManager{
 		}
 		return list;
 	}
-	public List<OnlineCourse> load1record(int courseid) throws SQLException{
+	public List<OnlineCourse> load1recordOlC(int courseid) throws SQLException{
 		String query = "SELECT `course`.`CourseID`,`Title`,`Credits`,`DepartmentID`,`url` FROM `course`,`onlinecourse` WHERE `onlinecourse`.`CourseID` = `course`.`CourseID`  and `course`.`CourseID` = ?;";
 		PreparedStatement p =c.prepareStatement(query);
 		p.setInt(1, courseid);		

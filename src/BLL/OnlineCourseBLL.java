@@ -22,14 +22,23 @@ public class OnlineCourseBLL {
 		int result = OlCDAL.insertOnlineCourse(OlC);
 		return result;
 	}
+	public int updateOlC(OnlineCourse OlC) throws SQLException{
+		int result = OlCDAL.updateOnlineCourses(OlC);
+		return result;
+	}
+	public int delOlC(OnlineCourse OlC) throws SQLException{
+		int result = OlCDAL.deleteOnlineCourse(OlC);
+		return result;
+	}	
 	public List findOlC(String title) throws SQLException{
 		List list = new ArrayList();
-		list = OlCDAL.findOlC(title);
+		list = OlCDAL.findOnlineCourse(title);
 		return list;
 	}
-	public List load1record (int courseid) throws SQLException{
+	public List load1banOlC (int courseid) throws SQLException{
 		List list = new ArrayList();
-		list = OlCDAL.load1record(courseid);
+		list = OlCDAL.load1recordOlC(courseid);
 		return list;
 	}
+	
 }

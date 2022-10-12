@@ -27,6 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import BLL.CourseBLL;
 import BLL.OnlineCourseBLL;
 import DAL.Course;
 import DAL.OnlineCourse;
@@ -38,9 +39,10 @@ public class KH_Online extends JFrame {
 	private JTextField txtFind;
 	private List<OnlineCourse> OlCs;
 	public static int courseid;
-	int selectedIndex;
+	public static int selectedIndex;
 	JTable table = new JTable();
-	OnlineCourseBLL OlCBll = new OnlineCourseBLL();
+	CourseBLL cBLL = new CourseBLL();
+	OnlineCourseBLL OlCBLL = new OnlineCourseBLL();
 	/**
 	 * Launch the application.
 	 */
@@ -78,7 +80,7 @@ public class KH_Online extends JFrame {
 		JButton btnThem = new JButton("Th\u00EAm");
 		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ThemDuLieu_Onsite themonsite = new ThemDuLieu_Onsite();
+				ThemDuLieu_Online themonsite = new ThemDuLieu_Online();
 				themonsite.show();
 			}
 		});
@@ -95,7 +97,7 @@ public class KH_Online extends JFrame {
 		btnSua.setBackground(new Color(102, 153, 255));
 		btnSua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SuaDuLieu_Onsite suaonsite = new SuaDuLieu_Onsite();
+				SuaDuLieu_Online suaonsite = new SuaDuLieu_Online();
 				suaonsite.show();
 			}
 		});
@@ -106,13 +108,8 @@ public class KH_Online extends JFrame {
 		
 		JButton btnXoa = new JButton("X\u00F3a");
 		btnXoa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					listOlC();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			public void actionPerformed(ActionEvent e) {				
+				btn_del();
 			}
 		});
 		btnXoa.setForeground(new Color(255, 255, 255));
@@ -183,15 +180,50 @@ public class KH_Online extends JFrame {
 		});
 		
 		scrollPane.setViewportView(table);
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					listOlC();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnRefresh.setForeground(Color.WHITE);
+		btnRefresh.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnRefresh.setBackground(new Color(102, 153, 255));
+		btnRefresh.setBounds(455, 536, 101, 50);
+		contentPane.add(btnRefresh);
 	}
 	
+
+	protected void btn_del() {
+		// TODO Auto-generated method stub
+		Course c = new Course();
+		OnlineCourse OlC = new OnlineCourse();
+		OlC.setCourseID((int) table.getValueAt(selectedIndex, 1));
+		c.setCourseID((int) table.getValueAt(selectedIndex, 1));
+		try {
+			if(OlCBLL.delOlC(OlC)>0&&cBLL.delCourse(c)>0) {
+				JOptionPane.showMessageDialog(this, "Complete delete", "Message", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(this, "Error delete", "Message", JOptionPane.ERROR_MESSAGE);
+						
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
 
 	protected void btn_Find() {
 		// TODO Auto-generated method stub
 		try {
 			String Title = txtFind.getText();			
 			if(Title.isBlank()==false) {
-				List list = OlCBll.findOlC(Title);
+				List list = OlCBLL.findOlC(Title);
 				DefaultTableModel model = convertOlC(list);
 				table.setModel(model);
 			}else {
@@ -204,7 +236,7 @@ public class KH_Online extends JFrame {
 	}
 
 	public void listOlC() throws SQLException{
-		List list = OlCBll.loadOlC(1);
+		List list = OlCBLL.loadOlC(1);
 		DefaultTableModel model = convertOlC(list);
 		table.setModel(model);
 		

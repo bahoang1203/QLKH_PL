@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -57,7 +56,7 @@ public class KH_Onsite extends JFrame {
 		JButton btnNewButton = new JButton("Th\u00EAm");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ThemDuLieu_Onsite them = new ThemDuLieu_Onsite();
+				ThemDuLieu_Online them = new ThemDuLieu_Online();
 				them.show();
 				
 				
@@ -76,7 +75,7 @@ public class KH_Onsite extends JFrame {
 		btnSa.setBackground(new Color(102, 153, 255));
 		btnSa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SuaDuLieu_Onsite sua = new SuaDuLieu_Onsite();
+				SuaDuLieu_Online sua = new SuaDuLieu_Online();
 				sua.show();
 				
 				

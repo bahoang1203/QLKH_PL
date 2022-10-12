@@ -30,17 +30,15 @@ import com.toedter.calendar.JDateChooser;
 
 import BLL.CourseBLL;
 import BLL.OnlineCourseBLL;
-import BLL.OnsiteCourseBLL;
 import DAL.Course;
 import DAL.OnlineCourse;
-import DAL.OnsiteCourse;
 
 import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRadioButton;
 
-public class SuaDuLieu_Onsite extends JFrame {
+public class SuaDuLieu_Online extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtC = new JTextField();
@@ -51,9 +49,10 @@ public class SuaDuLieu_Onsite extends JFrame {
 	private JTextField txtTime;
 	private JTextField txtCre = new JTextField();
 	private JTextField txtDate;
-	private int viewcourseid;	
+	private int viewcourseid;
+	private List<OnlineCourse> OlC;
 	CourseBLL cBLL = new CourseBLL();
-	OnsiteCourseBLL OsCBLL = new OnsiteCourseBLL();
+	OnlineCourseBLL OlCBLL = new OnlineCourseBLL();
 	/**
 	 * Launch the application.
 	 */
@@ -73,7 +72,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SuaDuLieu_Onsite() {
+	public SuaDuLieu_Online() {
 		try {
 			load();
 		} catch (SQLException e1) {
@@ -254,7 +253,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 	}
 	public void btn_update() {
 		Course c = new Course();
-		OnsiteCourse OsC = new OnsiteCourse();
+		OnlineCourse OlC = new OnlineCourse();
 		int i = Integer.parseInt(txtC.getText());
 		int cr = Integer.parseInt(txtCre.getText());
 		int dep = Integer.parseInt(txtDep.getText());
@@ -262,10 +261,10 @@ public class SuaDuLieu_Onsite extends JFrame {
 		c.setTitle(txtTitle.getText());
 		c.setCredits(cr);
 		c.setDepartmentID(dep);
-		OsC.setCourseID(i);
-		
+		OlC.setCourseID(i);
+		OlC.setUrl(txtURL.getText());
 		try {
-			if(cBLL.updCourse(c)>0&&OsCBLL.updateOsC(OsC)>0) {
+			if(cBLL.updCourse(c)>0&&OlCBLL.updateOlC(OlC)>0) {
 				JOptionPane.showMessageDialog(this, "Complete update", "Message", JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(this, "Error update", "Message", JOptionPane.ERROR_MESSAGE);
@@ -278,14 +277,14 @@ public class SuaDuLieu_Onsite extends JFrame {
 
 	public void load() throws SQLException {
 		viewcourseid = KH_Online.courseid;		
-		List list = OsCBLL.load1banOsC(viewcourseid);
+		List list = OlCBLL.load1banOlC(viewcourseid);
 		for (int i = 0;i<list.size();i++) {
-			OnsiteCourse OsC = (OnsiteCourse) list.get(i);
-			txtC.setText(OsC.getCourseID()+"");
-			txtTitle.setText(OsC.getTitle());
-			txtDep.setText(OsC.getDepartmentID()+"");
-			txtCre.setText(OsC.getCredits()+"");
-		
+			OnlineCourse OlC = (OnlineCourse) list.get(i);
+			txtC.setText(OlC.getCourseID()+"");
+			txtTitle.setText(OlC.getTitle());
+			txtDep.setText(OlC.getDepartmentID()+"");
+			txtCre.setText(OlC.getCredits()+"");
+			txtURL.setText(OlC.getUrl());
 		}
 	}
 	

@@ -34,7 +34,7 @@ import DAL.OnlineCourse;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class ThemDuLieu_Onsite extends JFrame {
+public class ThemDuLieu_Online extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -48,11 +48,11 @@ public class ThemDuLieu_Onsite extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void frmadd() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ThemDuLieu_Onsite frame = new ThemDuLieu_Onsite();
+					ThemDuLieu_Online frame = new ThemDuLieu_Online();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,10 +64,10 @@ public class ThemDuLieu_Onsite extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ThemDuLieu_Onsite() {
+	public ThemDuLieu_Online() {
 		this.setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 498, 412);
+		setBounds(100, 100, 498, 330);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.inactiveCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -163,12 +163,12 @@ public class ThemDuLieu_Onsite extends JFrame {
 				btn_Add();
 			}
 		});
-		btnSave.setIcon(new ImageIcon(ThemDuLieu_Onsite.class.getResource("/IMG/Custom-Icon-Design-Flatastic-9-Save.png")));
+		btnSave.setIcon(new ImageIcon(ThemDuLieu_Online.class.getResource("/IMG/Custom-Icon-Design-Flatastic-9-Save.png")));
 		btnSave.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSave.setForeground(new Color(0, 100, 0));
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnSave.setBackground(new Color(102, 153, 255));
-		btnSave.setBounds(41, 287, 98, 50);
+		btnSave.setBounds(41, 213, 98, 50);
 		contentPane.add(btnSave);
 		
 		JButton btnExit = new JButton("Tho\u00E1t");
@@ -177,12 +177,12 @@ public class ThemDuLieu_Onsite extends JFrame {
 				dispose();
 			}
 		});
-		btnExit.setIcon(new ImageIcon(ThemDuLieu_Onsite.class.getResource("/IMG/back.png")));
+		btnExit.setIcon(new ImageIcon(ThemDuLieu_Online.class.getResource("/IMG/back.png")));
 		btnExit.setHorizontalAlignment(SwingConstants.LEFT);
 		btnExit.setForeground(new Color(139, 0, 0));
 		btnExit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnExit.setBackground(new Color(102, 153, 255));
-		btnExit.setBounds(312, 287, 133, 50);
+		btnExit.setBounds(312, 213, 133, 50);
 		contentPane.add(btnExit);
 	}
 	public void btn_Add() {

@@ -2,6 +2,7 @@ package DAL;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OnsiteCourseDAL extends MyDatabaseManager {
 	public OnsiteCourseDAL(){
@@ -9,7 +10,7 @@ public class OnsiteCourseDAL extends MyDatabaseManager {
 		this.connectDB();
 	}
 	public ArrayList<OnsiteCourse> readOnsiteCourse()throws SQLException{
-		String query = "SELECT * FROM `onsitecourse`,`course` WHERE `onsitecourse`.`CourseID`=`course`.`CourseID`;";
+		String query = "SELECT `course`.`CourseID`,`Title`,`Credits`,`DepartmentID`,`Location`,`Days`,`Time` FROM `course`,`onsitecourse` WHERE `onsitecourse`.`CourseID` = `course`.`CourseID`;";
 		ResultSet rs= this.doReadQuery(query);
 		ArrayList<OnsiteCourse> list = new ArrayList<>();
 		if(rs!=null) {
@@ -52,5 +53,48 @@ public class OnsiteCourseDAL extends MyDatabaseManager {
 		p.setInt(1, OlC.getCourseID());
 		int result = p.executeUpdate();
 		return result;
+	}
+	public List<OnsiteCourse> findOnsiteCourse(String title) throws SQLException{
+		String query = "SELECT `course`.`CourseID`,`Title`,`Credits`,`DepartmentID`,`Location`,`Days`,`Time` FROM `course`,`onsitecourse` WHERE `onsitecourse`.`CourseID` = `course`.`CourseID` and `course`.`Title`= ? ;";
+		PreparedStatement p = c.prepareStatement(query);
+		p.setString(1, title);
+		ResultSet rs = p.executeQuery();
+		List<OnsiteCourse> list = new ArrayList<>();
+		if(rs!=null) {
+			//int i =1;
+			while(rs.next()) {
+				OnsiteCourse OsC = new OnsiteCourse();
+				OsC.setCourseID(rs.getInt("CourseID"));
+				OsC.setTitle(rs.getString("Title"));
+				OsC.setCredits(rs.getInt("Credits"));
+				OsC.setDepartmentID(rs.getInt("DepartmentID"));
+				OsC.setLocation(rs.getString("Location"));
+				OsC.setDays(rs.getString("Days"));
+				OsC.setTime(rs.getTime("Time"));
+				list.add(OsC);
+			}
+		}
+		return list;
+	}
+	public List<OnsiteCourse> load1recordOsC(int courseid) throws SQLException{
+		String query = "SELECT `course`.`CourseID`,`Title`,`Credits`,`DepartmentID`,`Location`,`Days`,`Time` FROM `course`,`onsitecourse` WHERE `onsitecourse`.`CourseID` = `course`.`CourseID`  and `course`.`CourseID` = ?;";
+		PreparedStatement p =c.prepareStatement(query);
+		p.setInt(1, courseid);		
+		ResultSet rs = p.executeQuery();
+		List <OnsiteCourse> list = new ArrayList<>();
+		if(rs!=null) {
+			while(rs.next()) {
+				OnsiteCourse OsC = new OnsiteCourse();
+				OsC.setCourseID(rs.getInt("CourseID"));
+				OsC.setTitle(rs.getString("Title"));
+				OsC.setCredits(rs.getInt("Credits"));
+				OsC.setDepartmentID(rs.getInt("DepartmentID"));
+				OsC.setLocation(rs.getString("Location"));
+				OsC.setDays(rs.getString("Days"));
+				OsC.setTime(rs.getTime("Time"));
+				list.add(OsC);
+			}
+		}		
+		return list;
 	}
 }
