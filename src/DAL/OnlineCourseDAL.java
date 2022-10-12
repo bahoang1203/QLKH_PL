@@ -37,7 +37,7 @@ public class OnlineCourseDAL extends MyDatabaseManager{
 	}
 	
 	public int insertOnlineCourse(OnlineCourse OlC) throws SQLException{
-		String query = "Insert OnlineCourse (CourseID,URL) Value(?,?)";
+		String query = "Insert OnlineCourse (CourseID,URL) Value (?,?)";
 		PreparedStatement p = c.prepareStatement(query);
 		p.setInt(1, OlC.getCourseID());
 		p.setString(2, OlC.getUrl());

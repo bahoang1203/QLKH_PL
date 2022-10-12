@@ -276,7 +276,7 @@ public class SuaDuLieu_Online extends JFrame {
 	}
 
 	public void load() throws SQLException {
-		viewcourseid = KH_Online.courseid;		
+		viewcourseid = KH_Online.courseidOlC;		
 		List list = OlCBLL.load1banOlC(viewcourseid);
 		for (int i = 0;i<list.size();i++) {
 			OnlineCourse OlC = (OnlineCourse) list.get(i);

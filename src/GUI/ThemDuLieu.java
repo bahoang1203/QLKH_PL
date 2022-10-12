@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.components.JSpinField;
 
 public class ThemDuLieu extends JFrame {
 
@@ -156,7 +157,13 @@ public class ThemDuLieu extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(142, 239, 146, 19);
+		dateChooser.setBounds(298, 239, 146, 19);
 		contentPane.add(dateChooser);
+		
+		JSpinField spin = new JSpinField();
+		spin.setMaximum(20);
+		spin.setMinimum(6);
+		spin.setBounds(142,230,146,19);
+		contentPane.add(spin);
 	}
 }

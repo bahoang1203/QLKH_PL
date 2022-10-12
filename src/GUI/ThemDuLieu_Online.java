@@ -37,7 +37,6 @@ import java.awt.event.KeyEvent;
 public class ThemDuLieu_Online extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
 	private JTextField txtURL;
 	private JTextField txtTitle;
 	private JTextField txtDep;
@@ -74,25 +73,6 @@ public class ThemDuLieu_Online extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblC = new JLabel("Course ID");
-		lblC.setBackground(new Color(240, 240, 240));
-		lblC.setBounds(41, 30, 65, 20);
-		contentPane.add(lblC);
-		
-		textField = new JTextField();
-		textField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume(); // if it's not a number, ignore the event
-				}
-			}
-		});
-		textField.setBounds(142, 30, 242, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
 		
 		JLabel lblURL = new JLabel("URL");
 		lblURL.setBackground(new Color(0, 255, 255));

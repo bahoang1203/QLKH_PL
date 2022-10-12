@@ -7,9 +7,9 @@ public class OnsiteCourse extends Course{
 	
 	String Location;
 	String Days;
-	Time time;
+	String time;
 	
-	public OnsiteCourse(int courseID, String title, int credits, int departmentID, String location, String days, Time time) {
+	public OnsiteCourse(int courseID, String title, int credits, int departmentID, String location, String days, String time) {
 		super(courseID, title, credits, departmentID);
 		Location = location;
 		Days = days;
@@ -30,11 +30,11 @@ public class OnsiteCourse extends Course{
 	public void setDays(String days) {
 		Days = days;
 	}
-	public Time getTime() {
+	public String getTime() {
 		return time;
 	}
-	public void setTime(Time time) {
-		this.time = time;
+	public void setTime(String t) {
+		this.time = t;
 	}
 	
 }

@@ -7,9 +7,11 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,33 +19,51 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.SystemColor;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.components.JSpinField;
 
 import BLL.CourseBLL;
 import BLL.OnlineCourseBLL;
+import BLL.OnsiteCourseBLL;
 import DAL.Course;
 import DAL.CourseDAL;
 import DAL.OnlineCourse;
+import DAL.OnsiteCourse;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JCheckBox;
+import java.util.Date;
+import java.util.Calendar;
 
 public class ThemDuLieu_Onsite extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField txtURL;
 	private JTextField txtTitle;
 	private JTextField txtDep;
 	private JTextField txtCre;
+	JCheckBox chMon = new JCheckBox();
+	JCheckBox chTu = new JCheckBox();
+	JCheckBox chWe = new JCheckBox();
+	JCheckBox chTh = new JCheckBox();
+	JCheckBox chFr = new JCheckBox();
+	JCheckBox chSa = new JCheckBox();
 	CourseBLL cBLL = new CourseBLL();
-	OnlineCourseBLL OlCBLL = new OnlineCourseBLL();
+	JSpinField spin2 = new JSpinField();
+	JSpinField spin = new JSpinField();
+	
+	OnsiteCourseBLL OsCBLL = new OnsiteCourseBLL();
+	private final JLabel lblLocation = new JLabel("Location");
+	private JTextField txtLo;
 
 	/**
 	 * Launch the application.
@@ -75,34 +95,10 @@ public class ThemDuLieu_Onsite extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblC = new JLabel("Course ID");
-		lblC.setBackground(new Color(240, 240, 240));
-		lblC.setBounds(41, 30, 65, 20);
-		contentPane.add(lblC);
-		
-		textField = new JTextField();
-		textField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume(); // if it's not a number, ignore the event
-				}
-			}
-		});
-		textField.setBounds(142, 30, 242, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblURL = new JLabel("URL");
-		lblURL.setBackground(new Color(0, 255, 255));
-		lblURL.setBounds(41, 150, 45, 20);
-		contentPane.add(lblURL);
-		
-		txtURL = new JTextField();
-		txtURL.setColumns(10);
-		txtURL.setBounds(142, 150, 242, 19);
-		contentPane.add(txtURL);
+		JLabel lblDays = new JLabel("Days");
+		lblDays.setBackground(new Color(0, 255, 255));
+		lblDays.setBounds(41, 189, 45, 20);
+		contentPane.add(lblDays);
 		
 		JLabel lblTitle = new JLabel("Title");
 		lblTitle.setBackground(new Color(240, 240, 240));
@@ -184,12 +180,74 @@ public class ThemDuLieu_Onsite extends JFrame {
 		btnExit.setBackground(new Color(102, 153, 255));
 		btnExit.setBounds(312, 287, 133, 50);
 		contentPane.add(btnExit);
+		
+		chMon.setText("Mo");
+		chMon.setBackground(SystemColor.inactiveCaption);
+		chMon.setBounds(142, 188, 97, 23);
+		contentPane.add(chMon);
+		
+		chTu.setText("Tu");
+		chTu.setBackground(SystemColor.inactiveCaption);
+		chTu.setBounds(241, 188, 97, 23);
+		contentPane.add(chTu);
+		
+		chWe.setText("We");
+		chWe.setBackground(SystemColor.inactiveCaption);
+		chWe.setBounds(340, 188, 97, 23);
+		contentPane.add(chWe);
+		
+		chTh.setText("Th");
+		chTh.setBackground(SystemColor.inactiveCaption);
+		chTh.setBounds(142, 218, 97, 23);
+		contentPane.add(chTh);
+		
+		chFr.setText("Fr");
+		chFr.setBackground(SystemColor.inactiveCaption);
+		chFr.setBounds(241, 218, 97, 23);
+		contentPane.add(chFr);
+		
+		chSa.setText("Sa");
+		chSa.setBackground(SystemColor.inactiveCaption);
+		chSa.setBounds(340, 218, 97, 23);
+		contentPane.add(chSa);
+		
+		JLabel lblTime = new JLabel("Time");
+		lblTime.setBackground(Color.CYAN);
+		lblTime.setBounds(41, 256, 45, 20);
+		contentPane.add(lblTime);
+		spin.setValue(6);
+		
+		
+		spin.setMaximum(20);
+		spin.setMinimum(6);
+		spin.setBounds(142,256,60,19);
+		contentPane.add(spin);
+		
+		
+		spin2.setMaximum(59);
+		spin2.setMinimum(0);
+		spin2.setBounds(218,256,60,19);
+		contentPane.add(spin2);
+		
+		JLabel lblNewLabel = new JLabel("::");
+		lblNewLabel.setBounds(207, 256, 8, 14);
+		contentPane.add(lblNewLabel);
+		lblLocation.setBackground(Color.CYAN);
+		lblLocation.setBounds(41, 151, 45, 20);
+		
+		contentPane.add(lblLocation);
+		
+		txtLo = new JTextField();
+		txtLo.setColumns(10);
+		txtLo.setBounds(142, 150, 242, 19);
+		contentPane.add(txtLo);
+		
 	}
 	public void btn_Add() {
 		Course c = new Course();
-		c.setTitle(txtTitle.getText());
 		int a = Integer.parseInt(txtCre.getText());
 		int b = Integer.parseInt(txtDep.getText());
+		c.setTitle(txtTitle.getText());		
 		c.setCredits(a);
 		c.setDepartmentID(b);
 		try {
@@ -201,11 +259,28 @@ public class ThemDuLieu_Onsite extends JFrame {
 		}catch(SQLException ex) {
 			Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		OnlineCourse OlC = new OnlineCourse();
-		OlC.setCourseID(CourseDAL.idvalue);
-		OlC.setUrl(txtURL.getText());
+		OnsiteCourse OsC = new OnsiteCourse();
+		OsC.setCourseID(CourseDAL.idvalue);
+		String temp = "";
+		if(chMon.isSelected()) {
+			temp = temp + "M";
+		}if(chTu.isSelected()) {
+			temp = temp + "T";
+		}if(chWe.isSelected()) {
+			temp = temp + "W";
+		}if(chTh.isSelected()) {
+			temp = temp + "H";
+		}if(chFr.isSelected()) {
+			temp = temp + "F";
+		}if(chSa.isSelected()) {
+			temp = temp + "S";
+		}		
+		String t = spin.getValue()+":"+spin2.getValue();
+		OsC.setLocation(txtLo.getText());
+		OsC.setDays(temp);
+		OsC.setTime(t);
 		try {
-			if(OlCBLL.addOlC(OlC)>0) {
+			if(OsCBLL.addOsC(OsC)>0) {
 				JOptionPane.showMessageDialog(this, "Complete add", "Message", JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(this, "Error add", "Message", JOptionPane.ERROR_MESSAGE);

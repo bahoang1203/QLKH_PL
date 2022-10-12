@@ -37,8 +37,7 @@ public class KH_Online extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtFind;
-	private List<OnlineCourse> OlCs;
-	public static int courseid;
+	public static int courseidOlC;
 	public static int selectedIndex;
 	JTable table = new JTable();
 	CourseBLL cBLL = new CourseBLL();
@@ -46,7 +45,7 @@ public class KH_Online extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void KH_Onlineform(String[] args) {
+	public static void KH_Onlineform() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -144,7 +143,7 @@ public class KH_Online extends JFrame {
 		btnFind.setForeground(new Color(102, 153, 255));
 		btnFind.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnFind.setBackground(SystemColor.inactiveCaptionBorder);
-		btnFind.setBounds(700, 39, 139, 37);
+		btnFind.setBounds(700, 43, 139, 37);
 		contentPane.add(btnFind);
 		
 		txtFind = new JTextField();
@@ -259,7 +258,7 @@ public class KH_Online extends JFrame {
 	private void cellClick() {
 		// TODO Auto-generated method stub
 		selectedIndex = table.getSelectedRow();		
-		courseid = (int) table.getValueAt(selectedIndex, 1);
+		courseidOlC = (int) table.getValueAt(selectedIndex, 1);
 		
 	}
 }

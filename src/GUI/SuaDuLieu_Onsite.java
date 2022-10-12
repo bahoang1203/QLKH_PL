@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,9 +25,11 @@ import javax.swing.JOptionPane;
 
 import java.awt.SystemColor;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.components.JSpinField;
 
 import BLL.CourseBLL;
 import BLL.OnlineCourseBLL;
@@ -37,6 +40,7 @@ import DAL.OnsiteCourse;
 
 import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
+import javax.swing.SpinnerDateModel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRadioButton;
 
@@ -47,10 +51,16 @@ public class SuaDuLieu_Onsite extends JFrame {
 	private JTextField txtURL = new JTextField();
 	private JTextField txtTitle = new JTextField();
 	private JTextField txtDep = new JTextField();
-	private JTextField txtLo;
-	private JTextField txtTime;
+	private JTextField txtLo = new JTextField();;
 	private JTextField txtCre = new JTextField();
-	private JTextField txtDate;
+	JCheckBox chMon = new JCheckBox();
+	JCheckBox chTh = new JCheckBox();
+	JCheckBox chTu = new JCheckBox();
+	JCheckBox chFr = new JCheckBox();
+	JCheckBox chWe = new JCheckBox();
+	JCheckBox chSa = new JCheckBox();
+	JSpinField spin2 = new JSpinField();
+	JSpinField spin = new JSpinField();
 	private int viewcourseid;	
 	CourseBLL cBLL = new CourseBLL();
 	OnsiteCourseBLL OsCBLL = new OnsiteCourseBLL();
@@ -149,28 +159,16 @@ public class SuaDuLieu_Onsite extends JFrame {
 		lblCre.setBackground(new Color(240, 240, 240));
 		lblCre.setBounds(41, 90, 45, 20);
 		contentPane.add(lblCre);
-		
-		txtDate = new JTextField();
-		txtDate.hide();
-		txtDate.setColumns(10);
-		txtDate.setBounds(142, 270, 242, 20);
-		contentPane.add(txtDate);
 	
 		txtDep.setColumns(10);
 		txtDep.setBounds(142, 120, 242, 20);
 		contentPane.add(txtDep);
 		
-		txtLo = new JTextField();
+		
 		txtLo.setColumns(10);
 		txtLo.setBounds(142, 210, 242, 20);
 		txtLo.hide();
 		contentPane.add(txtLo);
-		
-		txtTime = new JTextField();
-		txtTime.setColumns(10);
-		txtTime.setBounds(142, 240, 242, 20);
-		txtTime.hide();
-		contentPane.add(txtTime);
 		
 	
 		txtCre.setColumns(10);
@@ -215,8 +213,6 @@ public class SuaDuLieu_Onsite extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(radioOnline != null) {
 					txtLo.hide();
-					txtTime.hide();
-					txtDate.hide();
 					txtURL.show();
 					lblURL.show();
 					lblTime.hide();
@@ -234,8 +230,6 @@ public class SuaDuLieu_Onsite extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(radioOnsite != null) {
 					txtLo.show();
-					txtTime.show();
-					txtDate.show();
 					txtURL.hide();
 					lblURL.hide();
 					lblTime.show();
@@ -249,7 +243,56 @@ public class SuaDuLieu_Onsite extends JFrame {
 		ButtonGroup group = new ButtonGroup();
 		group.add(radioOnline);
 		group.add(radioOnsite);
+		spin.setValue(6);
 		
+		spin.setMaximum(20);
+		spin.setMinimum(6);
+		spin.setBounds(142,240,60,20);
+		contentPane.add(spin);
+		
+		spin2.setMaximum(20);
+		spin2.setMinimum(6);
+		spin2.setBounds(212,240,60,20);
+		contentPane.add(spin2);
+		
+		JLabel lblNewLabel = new JLabel(":");
+		lblNewLabel.setBounds(206, 243, 9, 14);
+		contentPane.add(lblNewLabel);
+				
+		chMon.setText("Mo");
+		chMon.setBackground(SystemColor.inactiveCaption);
+		chMon.setBounds(142, 270, 97, 23);
+		contentPane.add(chMon);
+		
+		
+		chTh.setText("Th");
+		chTh.setBackground(SystemColor.inactiveCaption);
+		chTh.setBounds(142, 300, 97, 23);
+		contentPane.add(chTh);
+		
+		
+		chTu.setText("Tu");
+		chTu.setBackground(SystemColor.inactiveCaption);
+		chTu.setBounds(241, 270, 97, 23);
+		contentPane.add(chTu);
+		
+		
+		chFr.setText("Fr");
+		chFr.setBackground(SystemColor.inactiveCaption);
+		chFr.setBounds(241, 300, 97, 23);
+		contentPane.add(chFr);
+		
+		
+		chWe.setText("We");
+		chWe.setBackground(SystemColor.inactiveCaption);
+		chWe.setBounds(340, 270, 97, 23);
+		contentPane.add(chWe);
+		
+		
+		chSa.setText("Sa");
+		chSa.setBackground(SystemColor.inactiveCaption);
+		chSa.setBounds(340, 300, 97, 23);
+		contentPane.add(chSa);
 		
 	}
 	public void btn_update() {
@@ -258,12 +301,29 @@ public class SuaDuLieu_Onsite extends JFrame {
 		int i = Integer.parseInt(txtC.getText());
 		int cr = Integer.parseInt(txtCre.getText());
 		int dep = Integer.parseInt(txtDep.getText());
+		String t = spin.getValue() + ":" + spin2.getValue();
 		c.setCourseID(i);
 		c.setTitle(txtTitle.getText());
 		c.setCredits(cr);
 		c.setDepartmentID(dep);
 		OsC.setCourseID(i);
-		
+		OsC.setLocation(txtLo.getText());		
+		OsC.setTime(t);
+		String temp = "";
+		if(chMon.isSelected()) {
+			temp = temp + "M";
+		}if(chTu.isSelected()) {
+			temp = temp + "T";
+		}if(chWe.isSelected()) {
+			temp = temp + "W";
+		}if(chTh.isSelected()) {
+			temp = temp + "H";
+		}if(chFr.isSelected()) {
+			temp = temp + "F";
+		}if(chSa.isSelected()) {
+			temp = temp + "S";
+		}		
+		OsC.setDays(temp);
 		try {
 			if(cBLL.updCourse(c)>0&&OsCBLL.updateOsC(OsC)>0) {
 				JOptionPane.showMessageDialog(this, "Complete update", "Message", JOptionPane.INFORMATION_MESSAGE);
@@ -277,15 +337,16 @@ public class SuaDuLieu_Onsite extends JFrame {
 	}
 
 	public void load() throws SQLException {
-		viewcourseid = KH_Online.courseid;		
+		viewcourseid = KH_Onsite.courseidOsC;		
 		List list = OsCBLL.load1banOsC(viewcourseid);
 		for (int i = 0;i<list.size();i++) {
 			OnsiteCourse OsC = (OnsiteCourse) list.get(i);
 			txtC.setText(OsC.getCourseID()+"");
 			txtTitle.setText(OsC.getTitle());
 			txtDep.setText(OsC.getDepartmentID()+"");
+			txtLo.setText(OsC.getLocation());
 			txtCre.setText(OsC.getCredits()+"");
-		
+			txtLo.setText(OsC.getLocation());
 		}
 	}
 	

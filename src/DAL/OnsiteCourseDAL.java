@@ -19,17 +19,17 @@ public class OnsiteCourseDAL extends MyDatabaseManager {
 				OsC.setCourseID(rs.getInt("CourseID"));
 				OsC.setTitle(rs.getString("Title"));
 				OsC.setCredits(rs.getInt("Credits"));
-				OsC.setDepartmentID(rs.getInt("Department"));
+				OsC.setDepartmentID(rs.getInt("DepartmentID"));
 				OsC.setLocation(rs.getString("Location"));
 				OsC.setDays(rs.getString("Days"));
-				OsC.setTime(rs.getTime("Time"));
+				OsC.setTime(rs.getString("Time"));
 				list.add(OsC);
 			}
 		}
 		return list;
 	}
 	public int updateOnsiteCourses(OnsiteCourse OsC) throws SQLException{
-		String query = "Update OnsiteCourse Set Location = ?, Day = ?, Time = ? where CourseID = ?";
+		String query = "Update OnsiteCourse Set Location = ?, Days = ?, Time = ? where CourseID = ?";
 		PreparedStatement p = c.prepareStatement(query);
 		p.setString(1, OsC.getLocation());
 		p.setString(2, OsC.getDays().toString());
@@ -39,11 +39,12 @@ public class OnsiteCourseDAL extends MyDatabaseManager {
 		return result;
 	}
 	public int insertOnsiteCourses(OnsiteCourse OsC) throws SQLException{
-		String query = "Insert Onsitecourse (Location, Days, Time) Value = (?,?,?)";
+		String query = "Insert OnsiteCourse (CourseID, Location, Days, Time) Value (?,?,?,?)";
 		PreparedStatement p = c.prepareStatement(query);
-		p.setString(1, OsC.getLocation());
-		p.setString(2, OsC.getDays().toString());
-		p.setString(3, OsC.getTime().toString());
+		p.setInt(1, OsC.getCourseID());
+		p.setString(2, OsC.getLocation());
+		p.setString(3, OsC.getDays());
+		p.setString(4, OsC.getTime());
 		int result = p.executeUpdate();
 		return result;
 	}
@@ -70,7 +71,7 @@ public class OnsiteCourseDAL extends MyDatabaseManager {
 				OsC.setDepartmentID(rs.getInt("DepartmentID"));
 				OsC.setLocation(rs.getString("Location"));
 				OsC.setDays(rs.getString("Days"));
-				OsC.setTime(rs.getTime("Time"));
+				OsC.setTime(rs.getString("Time"));
 				list.add(OsC);
 			}
 		}
@@ -91,7 +92,7 @@ public class OnsiteCourseDAL extends MyDatabaseManager {
 				OsC.setDepartmentID(rs.getInt("DepartmentID"));
 				OsC.setLocation(rs.getString("Location"));
 				OsC.setDays(rs.getString("Days"));
-				OsC.setTime(rs.getTime("Time"));
+				OsC.setTime(rs.getString("Time"));
 				list.add(OsC);
 			}
 		}		
