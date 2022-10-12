@@ -244,50 +244,53 @@ public class ThemDuLieu_Onsite extends JFrame {
 		
 	}
 	public void btn_Add() {
-		Course c = new Course();
-		int a = Integer.parseInt(txtCre.getText());
-		int b = Integer.parseInt(txtDep.getText());
-		c.setTitle(txtTitle.getText());		
-		c.setCredits(a);
-		c.setDepartmentID(b);
-		try {
-			if(cBLL.addCourse(c)>0) {
-				JOptionPane.showMessageDialog(this, "Complete add", "Message", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(this, "Error add", "Message", JOptionPane.ERROR_MESSAGE);
-			}			
-		}catch(SQLException ex) {
-			Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, ex);
+		if(txtTitle.getText().length()!=0 && txtCre.getText().length()!=0 && txtDep.getText().length()!=0 && txtLo.getText().length()!=0) {
+			Course c = new Course();
+			int a = Integer.parseInt(txtCre.getText());
+			int b = Integer.parseInt(txtDep.getText());
+			c.setTitle(txtTitle.getText());		
+			c.setCredits(a);
+			c.setDepartmentID(b);
+			try {
+				if(cBLL.addCourse(c)>0) {
+					JOptionPane.showMessageDialog(this, "Complete add", "Message", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(this, "Error add", "Message", JOptionPane.ERROR_MESSAGE);
+				}			
+			}catch(SQLException ex) {
+				Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, ex);
+			}
+			OnsiteCourse OsC = new OnsiteCourse();
+			OsC.setCourseID(CourseDAL.idvalue);
+			String temp = "";
+			if(chMon.isSelected()) {
+				temp = temp + "M";
+			}if(chTu.isSelected()) {
+				temp = temp + "T";
+			}if(chWe.isSelected()) {
+				temp = temp + "W";
+			}if(chTh.isSelected()) {
+				temp = temp + "H";
+			}if(chFr.isSelected()) {
+				temp = temp + "F";
+			}if(chSa.isSelected()) {
+				temp = temp + "S";
+			}		
+			String t = spin.getValue()+":"+spin2.getValue();
+			OsC.setLocation(txtLo.getText());
+			OsC.setDays(temp);
+			OsC.setTime(t);
+			try {
+				if(OsCBLL.addOsC(OsC)>0) {
+					JOptionPane.showMessageDialog(this, "Complete add", "Message", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(this, "Error add", "Message", JOptionPane.ERROR_MESSAGE);
+				}			
+			}catch(SQLException ex) {
+				Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "xin hãy nhập đầy đủ thông tin");
 		}
-		OnsiteCourse OsC = new OnsiteCourse();
-		OsC.setCourseID(CourseDAL.idvalue);
-		String temp = "";
-		if(chMon.isSelected()) {
-			temp = temp + "M";
-		}if(chTu.isSelected()) {
-			temp = temp + "T";
-		}if(chWe.isSelected()) {
-			temp = temp + "W";
-		}if(chTh.isSelected()) {
-			temp = temp + "H";
-		}if(chFr.isSelected()) {
-			temp = temp + "F";
-		}if(chSa.isSelected()) {
-			temp = temp + "S";
-		}		
-		String t = spin.getValue()+":"+spin2.getValue();
-		OsC.setLocation(txtLo.getText());
-		OsC.setDays(temp);
-		OsC.setTime(t);
-		try {
-			if(OsCBLL.addOsC(OsC)>0) {
-				JOptionPane.showMessageDialog(this, "Complete add", "Message", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(this, "Error add", "Message", JOptionPane.ERROR_MESSAGE);
-			}			
-		}catch(SQLException ex) {
-			Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		
 	}
 }

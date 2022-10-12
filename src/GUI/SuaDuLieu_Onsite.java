@@ -43,12 +43,12 @@ import javax.swing.JToggleButton;
 import javax.swing.SpinnerDateModel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRadioButton;
+import javax.swing.JComboBox;
 
 public class SuaDuLieu_Onsite extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtC = new JTextField();
-	private JTextField txtURL = new JTextField();
+	private JComboBox cbC = new JComboBox();
 	private JTextField txtTitle = new JTextField();
 	private JTextField txtDep = new JTextField();
 	private JTextField txtLo = new JTextField();;
@@ -85,6 +85,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 	 */
 	public SuaDuLieu_Onsite() {
 		try {
+			loadcombox();
 			load();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -92,7 +93,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 		}
 		this.setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 501, 445);
+		setBounds(100, 100, 501, 391);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.inactiveCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -103,7 +104,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 		JLabel lblDate = new JLabel("Date");
 		lblDate.hide();
 		lblDate.setBackground(SystemColor.menu);
-		lblDate.setBounds(41, 270, 45, 20);
+		lblDate.setBounds(41, 210, 45, 20);
 		contentPane.add(lblDate);
 		
 		JLabel lblCourse = new JLabel("Course ID");
@@ -112,20 +113,9 @@ public class SuaDuLieu_Onsite extends JFrame {
 		contentPane.add(lblCourse);
 		
 		
-		txtC.setEditable(false);
-		txtC.setBounds(142, 30, 242, 20);
-		contentPane.add(txtC);
-		txtC.setColumns(10);
-		
-		JLabel lblURL = new JLabel("URL");
-		lblURL.setBackground(new Color(0, 255, 255));
-		lblURL.setBounds(41, 180, 45, 20);
-		contentPane.add(lblURL);
-		
-		
-		txtURL.setColumns(10);
-		txtURL.setBounds(142, 180, 242, 20);
-		contentPane.add(txtURL);
+		cbC.setEditable(false);
+		cbC.setBounds(142, 30, 242, 20);
+		contentPane.add(cbC);
 		
 		JLabel lblTitle = new JLabel("Title");
 		lblTitle.setBackground(new Color(240, 240, 240));
@@ -146,13 +136,13 @@ public class SuaDuLieu_Onsite extends JFrame {
 		JLabel lblLo = new JLabel("Location");
 		lblLo.hide();
 		lblLo.setBackground(new Color(240, 240, 240));
-		lblLo.setBounds(41, 210, 91, 20);
+		lblLo.setBounds(41, 150, 91, 20);
 		contentPane.add(lblLo);
 		
 		JLabel lblTime = new JLabel("Time");
 		lblTime.hide();
 		lblTime.setBackground(new Color(240, 240, 240));
-		lblTime.setBounds(41, 240, 45, 20);
+		lblTime.setBounds(41, 180, 45, 20);
 		contentPane.add(lblTime);
 		
 		JLabel lblCre = new JLabel("Credits");
@@ -166,7 +156,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 		
 		
 		txtLo.setColumns(10);
-		txtLo.setBounds(142, 210, 242, 20);
+		txtLo.setBounds(142, 150, 242, 20);
 		txtLo.hide();
 		contentPane.add(txtLo);
 		
@@ -186,7 +176,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 		btnSave.setForeground(new Color(34, 139, 34));
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnSave.setBackground(new Color(102, 153, 255));
-		btnSave.setBounds(41, 348, 98, 50);
+		btnSave.setBounds(42, 279, 98, 50);
 		contentPane.add(btnSave);
 		
 		JButton btnExit = new JButton("Tho\u00E1t");
@@ -202,103 +192,65 @@ public class SuaDuLieu_Onsite extends JFrame {
 		btnExit.setForeground(new Color(139, 0, 0));
 		btnExit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnExit.setBackground(new Color(102, 153, 255));
-		btnExit.setBounds(319, 348, 133, 50);
+		btnExit.setBounds(320, 279, 133, 50);
 		contentPane.add(btnExit);
-		
-		JRadioButton radioOnline = new JRadioButton("Online");
-		radioOnline.setSelected(true);
-		radioOnline.setBackground(SystemColor.inactiveCaption);
-		
-		radioOnline.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(radioOnline != null) {
-					txtLo.hide();
-					txtURL.show();
-					lblURL.show();
-					lblTime.hide();
-					lblLo.hide();
-					lblDate.hide();
-				}
-			}
-		});
-		radioOnline.setBounds(142, 150, 109, 23);
-		contentPane.add(radioOnline);
-		
-		JRadioButton radioOnsite = new JRadioButton("Onsite");
-		radioOnsite.setBackground(SystemColor.inactiveCaption);
-		radioOnsite.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(radioOnsite != null) {
-					txtLo.show();
-					txtURL.hide();
-					lblURL.hide();
-					lblTime.show();
-					lblLo.show();
-					lblDate.show();				
-				}
-			}
-		});
-		radioOnsite.setBounds(275, 150, 109, 23);
-		contentPane.add(radioOnsite);
 		ButtonGroup group = new ButtonGroup();
-		group.add(radioOnline);
-		group.add(radioOnsite);
 		spin.setValue(6);
 		
 		spin.setMaximum(20);
 		spin.setMinimum(6);
-		spin.setBounds(142,240,60,20);
+		spin.setBounds(142,180,60,20);
 		contentPane.add(spin);
 		
 		spin2.setMaximum(20);
 		spin2.setMinimum(6);
-		spin2.setBounds(212,240,60,20);
+		spin2.setBounds(212,180,60,20);
 		contentPane.add(spin2);
 		
 		JLabel lblNewLabel = new JLabel(":");
-		lblNewLabel.setBounds(206, 243, 9, 14);
+		lblNewLabel.setBounds(206, 180, 9, 14);
 		contentPane.add(lblNewLabel);
 				
 		chMon.setText("Mo");
 		chMon.setBackground(SystemColor.inactiveCaption);
-		chMon.setBounds(142, 270, 97, 23);
+		chMon.setBounds(142, 210, 97, 23);
 		contentPane.add(chMon);
 		
 		
 		chTh.setText("Th");
 		chTh.setBackground(SystemColor.inactiveCaption);
-		chTh.setBounds(142, 300, 97, 23);
+		chTh.setBounds(142, 240, 97, 23);
 		contentPane.add(chTh);
 		
 		
 		chTu.setText("Tu");
 		chTu.setBackground(SystemColor.inactiveCaption);
-		chTu.setBounds(241, 270, 97, 23);
+		chTu.setBounds(241, 209, 97, 23);
 		contentPane.add(chTu);
 		
 		
 		chFr.setText("Fr");
 		chFr.setBackground(SystemColor.inactiveCaption);
-		chFr.setBounds(241, 300, 97, 23);
+		chFr.setBounds(241, 240, 97, 23);
 		contentPane.add(chFr);
 		
 		
 		chWe.setText("We");
 		chWe.setBackground(SystemColor.inactiveCaption);
-		chWe.setBounds(340, 270, 97, 23);
+		chWe.setBounds(340, 209, 97, 23);
 		contentPane.add(chWe);
 		
 		
 		chSa.setText("Sa");
 		chSa.setBackground(SystemColor.inactiveCaption);
-		chSa.setBounds(340, 300, 97, 23);
+		chSa.setBounds(340, 240, 97, 23);
 		contentPane.add(chSa);
 		
 	}
 	public void btn_update() {
 		Course c = new Course();
 		OnsiteCourse OsC = new OnsiteCourse();
-		int i = Integer.parseInt(txtC.getText());
+		int i = Integer.parseInt(cbC.getSelectedItem().toString());
 		int cr = Integer.parseInt(txtCre.getText());
 		int dep = Integer.parseInt(txtDep.getText());
 		String t = spin.getValue() + ":" + spin2.getValue();
@@ -335,13 +287,19 @@ public class SuaDuLieu_Onsite extends JFrame {
 			Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-
+	public void loadcombox() throws SQLException {
+		List list = OsCBLL.loadOsC(1);
+		for(int i = 0; i<list.size();i++) {
+			OnsiteCourse OlC = (OnsiteCourse) list.get(i);
+			cbC.addItem(OlC.getCourseID());
+		}
+	}
 	public void load() throws SQLException {
 		viewcourseid = KH_Onsite.courseidOsC;		
 		List list = OsCBLL.load1banOsC(viewcourseid);
 		for (int i = 0;i<list.size();i++) {
 			OnsiteCourse OsC = (OnsiteCourse) list.get(i);
-			txtC.setText(OsC.getCourseID()+"");
+			cbC.setSelectedItem(OsC.getCourseID());
 			txtTitle.setText(OsC.getTitle());
 			txtDep.setText(OsC.getDepartmentID()+"");
 			txtLo.setText(OsC.getLocation());

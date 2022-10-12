@@ -1,11 +1,29 @@
 package DAL;
 
 import java.sql.*;
+import java.util.ArrayList;
 public class CourseDAL extends MyDatabaseManager{
 	public static int idvalue = 0;
 	public CourseDAL(){
 		super();
 		this.connectDB();
+	}
+	public ArrayList<Course> readCourse() throws SQLException{
+		ArrayList<Course> list = new ArrayList<>();
+		String query = "Select * from Course";
+		PreparedStatement p = c.prepareStatement(query);
+		ResultSet rs = this.doReadQuery(query);
+		if(rs!=null) {
+			while(rs.next()) {
+				Course c = new Course();
+				c.setCourseID(rs.getInt("CourseID"));
+				c.setTitle(rs.getString("Title"));
+				c.setCredits(rs.getInt("Credits"));
+				c.setDepartmentID(rs.getInt("DepartmentID"));
+				list.add(c);
+			}
+		}
+		return list;
 	}
 	public int insertCourse(Course course) throws SQLException{
 		String query = "Insert Course (Title, Credits, DepartmentID) VALUE (?,?,?)";

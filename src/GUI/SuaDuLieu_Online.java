@@ -37,18 +37,16 @@ import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRadioButton;
+import javax.swing.JComboBox;
 
 public class SuaDuLieu_Online extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtC = new JTextField();
+	private JComboBox cbC = new JComboBox();
 	private JTextField txtURL = new JTextField();
 	private JTextField txtTitle = new JTextField();
 	private JTextField txtDep = new JTextField();
-	private JTextField txtLo;
-	private JTextField txtTime;
 	private JTextField txtCre = new JTextField();
-	private JTextField txtDate;
 	private int viewcourseid;
 	private List<OnlineCourse> OlC;
 	CourseBLL cBLL = new CourseBLL();
@@ -74,6 +72,7 @@ public class SuaDuLieu_Online extends JFrame {
 	 */
 	public SuaDuLieu_Online() {
 		try {
+			loadcombox();
 			load();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -81,7 +80,7 @@ public class SuaDuLieu_Online extends JFrame {
 		}
 		this.setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 501, 445);
+		setBounds(100, 100, 501, 322);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.inactiveCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -89,31 +88,24 @@ public class SuaDuLieu_Online extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblDate = new JLabel("Date");
-		lblDate.hide();
-		lblDate.setBackground(SystemColor.menu);
-		lblDate.setBounds(41, 270, 45, 20);
-		contentPane.add(lblDate);
-		
 		JLabel lblCourse = new JLabel("Course ID");
 		lblCourse.setBackground(new Color(240, 240, 240));
 		lblCourse.setBounds(41, 31, 65, 20);
 		contentPane.add(lblCourse);
 		
 		
-		txtC.setEditable(false);
-		txtC.setBounds(142, 30, 242, 20);
-		contentPane.add(txtC);
-		txtC.setColumns(10);
+		cbC.setEditable(false);
+		cbC.setBounds(142, 30, 242, 20);
+		contentPane.add(cbC);
 		
 		JLabel lblURL = new JLabel("URL");
 		lblURL.setBackground(new Color(0, 255, 255));
-		lblURL.setBounds(41, 180, 45, 20);
+		lblURL.setBounds(41, 150, 45, 20);
 		contentPane.add(lblURL);
 		
 		
 		txtURL.setColumns(10);
-		txtURL.setBounds(142, 180, 242, 20);
+		txtURL.setBounds(142, 150, 242, 20);
 		contentPane.add(txtURL);
 		
 		JLabel lblTitle = new JLabel("Title");
@@ -132,44 +124,14 @@ public class SuaDuLieu_Online extends JFrame {
 		lblDep.setBounds(41, 120, 91, 20);
 		contentPane.add(lblDep);
 		
-		JLabel lblLo = new JLabel("Location");
-		lblLo.hide();
-		lblLo.setBackground(new Color(240, 240, 240));
-		lblLo.setBounds(41, 210, 91, 20);
-		contentPane.add(lblLo);
-		
-		JLabel lblTime = new JLabel("Time");
-		lblTime.hide();
-		lblTime.setBackground(new Color(240, 240, 240));
-		lblTime.setBounds(41, 240, 45, 20);
-		contentPane.add(lblTime);
-		
 		JLabel lblCre = new JLabel("Credits");
 		lblCre.setBackground(new Color(240, 240, 240));
 		lblCre.setBounds(41, 90, 45, 20);
 		contentPane.add(lblCre);
-		
-		txtDate = new JTextField();
-		txtDate.hide();
-		txtDate.setColumns(10);
-		txtDate.setBounds(142, 270, 242, 20);
-		contentPane.add(txtDate);
 	
 		txtDep.setColumns(10);
 		txtDep.setBounds(142, 120, 242, 20);
 		contentPane.add(txtDep);
-		
-		txtLo = new JTextField();
-		txtLo.setColumns(10);
-		txtLo.setBounds(142, 210, 242, 20);
-		txtLo.hide();
-		contentPane.add(txtLo);
-		
-		txtTime = new JTextField();
-		txtTime.setColumns(10);
-		txtTime.setBounds(142, 240, 242, 20);
-		txtTime.hide();
-		contentPane.add(txtTime);
 		
 	
 		txtCre.setColumns(10);
@@ -187,7 +149,7 @@ public class SuaDuLieu_Online extends JFrame {
 		btnSave.setForeground(new Color(34, 139, 34));
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnSave.setBackground(new Color(102, 153, 255));
-		btnSave.setBounds(41, 348, 98, 50);
+		btnSave.setBounds(41, 204, 98, 50);
 		contentPane.add(btnSave);
 		
 		JButton btnExit = new JButton("Tho\u00E1t");
@@ -195,7 +157,6 @@ public class SuaDuLieu_Online extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				dispose();
-			    
 			}
 		});
 		btnExit.setIcon(new ImageIcon(ThemDuLieu_Online.class.getResource("/IMG/back.png")));
@@ -203,58 +164,23 @@ public class SuaDuLieu_Online extends JFrame {
 		btnExit.setForeground(new Color(139, 0, 0));
 		btnExit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnExit.setBackground(new Color(102, 153, 255));
-		btnExit.setBounds(319, 348, 133, 50);
+		btnExit.setBounds(319, 204, 133, 50);
 		contentPane.add(btnExit);
-		
-		JRadioButton radioOnline = new JRadioButton("Online");
-		radioOnline.setSelected(true);
-		radioOnline.setBackground(SystemColor.inactiveCaption);
-		
-		radioOnline.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(radioOnline != null) {
-					txtLo.hide();
-					txtTime.hide();
-					txtDate.hide();
-					txtURL.show();
-					lblURL.show();
-					lblTime.hide();
-					lblLo.hide();
-					lblDate.hide();
-				}
-			}
-		});
-		radioOnline.setBounds(142, 150, 109, 23);
-		contentPane.add(radioOnline);
-		
-		JRadioButton radioOnsite = new JRadioButton("Onsite");
-		radioOnsite.setBackground(SystemColor.inactiveCaption);
-		radioOnsite.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(radioOnsite != null) {
-					txtLo.show();
-					txtTime.show();
-					txtDate.show();
-					txtURL.hide();
-					lblURL.hide();
-					lblTime.show();
-					lblLo.show();
-					lblDate.show();				
-				}
-			}
-		});
-		radioOnsite.setBounds(275, 150, 109, 23);
-		contentPane.add(radioOnsite);
 		ButtonGroup group = new ButtonGroup();
-		group.add(radioOnline);
-		group.add(radioOnsite);
 		
 		
+	}
+	public void loadcombox() throws SQLException {
+		List list = OlCBLL.loadOlC(1);
+		for(int i = 0; i<list.size();i++) {
+			OnlineCourse OlC = (OnlineCourse) list.get(i);
+			cbC.addItem(OlC.getCourseID());
+		}
 	}
 	public void btn_update() {
 		Course c = new Course();
 		OnlineCourse OlC = new OnlineCourse();
-		int i = Integer.parseInt(txtC.getText());
+		int i = Integer.parseInt(cbC.getSelectedItem().toString());
 		int cr = Integer.parseInt(txtCre.getText());
 		int dep = Integer.parseInt(txtDep.getText());
 		c.setCourseID(i);
@@ -280,11 +206,11 @@ public class SuaDuLieu_Online extends JFrame {
 		List list = OlCBLL.load1banOlC(viewcourseid);
 		for (int i = 0;i<list.size();i++) {
 			OnlineCourse OlC = (OnlineCourse) list.get(i);
-			txtC.setText(OlC.getCourseID()+"");
+			cbC.setSelectedItem(OlC.getCourseID());
 			txtTitle.setText(OlC.getTitle());
 			txtDep.setText(OlC.getDepartmentID()+"");
 			txtCre.setText(OlC.getCredits()+"");
-			txtURL.setText(OlC.getUrl());
+			txtURL.setText(OlC.getUrl());			
 		}
 	}
 	

@@ -166,33 +166,36 @@ public class ThemDuLieu_Online extends JFrame {
 		contentPane.add(btnExit);
 	}
 	public void btn_Add() {
-		Course c = new Course();
-		c.setTitle(txtTitle.getText());
-		int a = Integer.parseInt(txtCre.getText());
-		int b = Integer.parseInt(txtDep.getText());
-		c.setCredits(a);
-		c.setDepartmentID(b);
-		try {
-			if(cBLL.addCourse(c)>0) {
-				JOptionPane.showMessageDialog(this, "Complete add", "Message", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(this, "Error add", "Message", JOptionPane.ERROR_MESSAGE);
-			}			
-		}catch(SQLException ex) {
-			Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, ex);
+		if(txtTitle.getText().length()!=0 && txtCre.getText().length()!=0 && txtDep.getText().length()!=0 && txtURL.getText().length()!=0) {
+			Course c = new Course();
+			c.setTitle(txtTitle.getText());
+			int a = Integer.parseInt(txtCre.getText());
+			int b = Integer.parseInt(txtDep.getText());
+			c.setCredits(a);
+			c.setDepartmentID(b);
+			try {
+				if(cBLL.addCourse(c)>0) {
+					JOptionPane.showMessageDialog(this, "Complete add", "Message", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(this, "Error add", "Message", JOptionPane.ERROR_MESSAGE);
+				}			
+			}catch(SQLException ex) {
+				Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, ex);
+			}
+			OnlineCourse OlC = new OnlineCourse();
+			OlC.setCourseID(CourseDAL.idvalue);
+			OlC.setUrl(txtURL.getText());
+			try {
+				if(OlCBLL.addOlC(OlC)>0) {
+					JOptionPane.showMessageDialog(this, "Complete add", "Message", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(this, "Error add", "Message", JOptionPane.ERROR_MESSAGE);
+				}			
+			}catch(SQLException ex) {
+				Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "xin hãy nhập đầy đủ thông tin");
 		}
-		OnlineCourse OlC = new OnlineCourse();
-		OlC.setCourseID(CourseDAL.idvalue);
-		OlC.setUrl(txtURL.getText());
-		try {
-			if(OlCBLL.addOlC(OlC)>0) {
-				JOptionPane.showMessageDialog(this, "Complete add", "Message", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(this, "Error add", "Message", JOptionPane.ERROR_MESSAGE);
-			}			
-		}catch(SQLException ex) {
-			Logger.getLogger(KQ.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		
 	}
 }
