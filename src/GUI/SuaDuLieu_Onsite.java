@@ -102,7 +102,7 @@ public class SuaDuLieu_Onsite extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblDate = new JLabel("Date");
-		lblDate.hide();
+		
 		lblDate.setBackground(SystemColor.menu);
 		lblDate.setBounds(41, 210, 45, 20);
 		contentPane.add(lblDate);
@@ -134,13 +134,13 @@ public class SuaDuLieu_Onsite extends JFrame {
 		contentPane.add(lblDep);
 		
 		JLabel lblLo = new JLabel("Location");
-		lblLo.hide();
+		
 		lblLo.setBackground(new Color(240, 240, 240));
 		lblLo.setBounds(41, 150, 91, 20);
 		contentPane.add(lblLo);
 		
 		JLabel lblTime = new JLabel("Time");
-		lblTime.hide();
+		
 		lblTime.setBackground(new Color(240, 240, 240));
 		lblTime.setBounds(41, 180, 45, 20);
 		contentPane.add(lblTime);
@@ -157,7 +157,6 @@ public class SuaDuLieu_Onsite extends JFrame {
 		
 		txtLo.setColumns(10);
 		txtLo.setBounds(142, 150, 242, 20);
-		txtLo.hide();
 		contentPane.add(txtLo);
 		
 	

@@ -233,7 +233,7 @@ public class ThemDuLieu_Onsite extends JFrame {
 		lblNewLabel.setBounds(207, 256, 8, 14);
 		contentPane.add(lblNewLabel);
 		lblLocation.setBackground(Color.CYAN);
-		lblLocation.setBounds(41, 151, 45, 20);
+		lblLocation.setBounds(41, 151, 60, 20);
 		
 		contentPane.add(lblLocation);
 		
